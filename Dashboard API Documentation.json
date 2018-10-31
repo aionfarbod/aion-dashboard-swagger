@@ -9,7 +9,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
   },
-  "host": "https://mastery-api.aion.network/",
+  "host": "mastery-api.aion.network",
   "basePath": "/aion",
   "tags": [
     {
