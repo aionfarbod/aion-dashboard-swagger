@@ -1,935 +1,1176 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "description": "Public API Documentation",
-        "version": "1.0",
-        "title": "AION Dashboard",
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0"
-        }
-    },
-    "host": "mastery-api.aion.network",
-    "basePath": "/",
-    "tags": [
-        {
-            "name": "Home",
-            "description": "All methods on the Home Page"
-        },
-        {
-            "name": "Block",
-            "description": "All Block-related API methods"
-        },
-        {
-            "name": "Token",
-            "description": "All Token-related API methods"
-        },
-        {
-            "name": "Account",
-            "description": "All Account-related API methods"
-        },
-        {
-            "name": "Contract",
-            "description": "All Contract-related API methods"
-        },
-        {
-            "name": "Transaction",
-            "description": "All Transaction-related API methods"
-        },
-        {
-            "name": "Miscellaneous",
-            "description": "All other methods that do not fit into the other categories"
-        }
-    ],
-    "paths": {
-        "/aion/dashboard/getMetrics": {
-            "get": {
-                "tags": [
-                    "Miscellaneous"
-                ],
-                "summary": "",
-                "description": "Used to gather the key metrics on realtime data to build alerts",
-                "operationId": "getMetrics",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getGraphingInfo": {
-            "get": {
-                "tags": [
-                    "Miscellaneous"
-                ],
-                "summary": "",
-                "description": "Used to information for the sake of graphs",
-                "operationId": "getGraphingInfo",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "type",
-                        "in": "query",
-                        "description": "0 = Active Address Growth, 1 = Top Miner, 2 = Difficulty, 3 = Hashing Power, 4 = Transactions over time, 5 = Block Time",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getTokenList": {
-            "get": {
-                "tags": [
-                    "Token"
-                ],
-                "summary": "",
-                "description": "Finds a list of all tokens created within the last year",
-                "operationId": "getTokenList",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "The page number to show information token records or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The amount of token records per page or null",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getTokenByTokenNameOrTokenSymbol": {
-            "get": {
-                "tags": [
-                    "Token"
-                ],
-                "summary": "",
-                "description": "Finds a list of one or more tokens with the same name or symbol",
-                "operationId": "getTokenByTokenNameOrTokenSymbol",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "searchParam",
-                        "in": "query",
-                        "description": "Accepts only one valid token name or symbol",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "The page number to show information token records or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The amount of token records per page or null",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getTokenDetailsTransfersAndHoldersByContractAddress": {
-            "get": {
-                "tags": [
-                    "Token"
-                ],
-                "summary": "",
-                "description": "Finds the detailed information on a token, its transfers, and its holders by the token's address",
-                "operationId": "getTokenAndTransactionAndAccountDetailsByContractAddress",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "searchParam",
-                        "in": "query",
-                        "description": "Accepts only one valid contract address",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "holdersPage",
-                        "in": "query",
-                        "description": "The page number to show information for account holders or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "holdersSize",
-                        "in": "query",
-                        "description": "The amount of token records for account holders per page or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "transfersPage",
-                        "in": "query",
-                        "description": "The page number to show information for transaction tranfsers from or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "transfersSize",
-                        "in": "query",
-                        "description": "The amount of token records for transaction tranfsers per page or null",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getContractList": {
-            "get": {
-                "tags": [
-                    "Contract"
-                ],
-                "summary": "",
-                "description": "Finds a list of all contracts created within the last year",
-                "operationId": "getContractList",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "The page number to show information or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The amount of contract records per page or null",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getContractDetailsByContractAddress": {
-            "get": {
-                "tags": [
-                    "Contract"
-                ],
-                "summary": "",
-                "description": "Finds the detailed information of a contract by the contract's address",
-                "operationId": "getContractDetailsByContractAddress",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "searchParam",
-                        "in": "query",
-                        "description": "Accepts only one valid contract address",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "eventsPage",
-                        "in": "query",
-                        "description": "The page number to show information contract events or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "eventsSize",
-                        "in": "query",
-                        "description": "The amount of contract events per page or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "transactionsPage",
-                        "in": "query",
-                        "description": "The page number to show information contract transactions or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "transactionsSize",
-                        "in": "query",
-                        "description": "The amount of contract transactions per page or null",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getBlockList": {
-            "get": {
-                "tags": [
-                    "Block"
-                ],
-                "summary": "",
-                "description": "Finds a list of the last 1,000 blocks",
-                "operationId": "getBlockList",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "The page number to show block records or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The amount of block records in per page or null",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getBlocksMinedByAddress": {
-            "get": {
-                "tags": [
-                    "Block"
-                ],
-                "summary": "",
-                "description": "Finds a list of the last 1,000,000 blocks mined by an account",
-                "operationId": "getBlocksMinedByAddress",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "searchParam",
-                        "in": "query",
-                        "description": "Accepts only one valid address",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "The page number to show mined block records or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The amount of mined block records per page or null",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/findByBlockNumberOrBlockHash": {
-            "get": {
-                "tags": [
-                    "Block"
-                ],
-                "summary": "",
-                "description": "Finds a block by its number or hash",
-                "operationId": "findByBlockNumberOrBlockHash",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "searchParam",
-                        "in": "query",
-                        "description": "Accepts only one valid block number or hash",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getBlockAndTransactionDetailsFromBlockNumberOrBlockHash": {
-            "get": {
-                "tags": [
-                    "Block"
-                ],
-                "summary": "",
-                "description": "Finds the block and transaction details on a specific block by its number or hash",
-                "operationId": "getBlockAndTransactionDetailsFromBlockNumberOrBlockHash",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "searchParam",
-                        "in": "query",
-                        "description": "Accepts only one valid block number or hash",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getAccountRichList": {
-            "get": {
-                "tags": [
-                    "Account"
-                ],
-                "summary": "",
-                "description": "Finds the Top 25 richest accounts on the network",
-                "operationId": "getAccountRichList",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getAccountDetails": {
-            "get": {
-                "tags": [
-                    "Account"
-                ],
-                "summary": "",
-                "description": "Finds the details of an account by its address",
-                "operationId": "getAccountDetails",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "accountAddress",
-                        "in": "query",
-                        "description": "Accepts only one valid account address",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "tokenAddress",
-                        "in": "query",
-                        "description": "Accepts only one valid token address or null for the Aion token",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getDailyAccountStatistics": {
-            "get": {
-                "tags": [
-                    "Account"
-                ],
-                "summary": "",
-                "description": "Finds the general statistics of accounts involved in mining, inbound transactions, and outbound transactions within the last 24 hours",
-                "operationId": "getDailyAccountStatistics",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getTransactionList": {
-            "get": {
-                "tags": [
-                    "Transaction"
-                ],
-                "summary": "",
-                "description": "Finds a list of the last 1,000 transactions",
-                "operationId": "getTransactionList",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "The page number to show transaction records from",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The amount of transaction records per page",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getTransactionDetailsByTransactionHash": {
-            "get": {
-                "tags": [
-                    "Transaction"
-                ],
-                "summary": "",
-                "description": "Finds a transaction by its hash",
-                "operationId": "findByTransactionHash",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "searchParam",
-                        "in": "query",
-                        "description": "Accepts only one valid transaction hash",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "The page number to show transaction records from",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The amount of transaction records per page",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/getTransactionsByAddress": {
-            "get": {
-                "tags": [
-                    "Transaction"
-                ],
-                "summary": "",
-                "description": "Finds a list of the last 1,000,000 transactions sent/received by an account",
-                "operationId": "getTransactionsByAddress",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "accountAddress",
-                        "in": "query",
-                        "description": "Accepts only one valid account address",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "tokenAddress",
-                        "in": "query",
-                        "description": "Accepts only one valid token address or null for the Aion token",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "The page number to show sent/received transaction records from or null",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The amount of sent/received transaction records per page or null",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/view": {
-            "get": {
-                "tags": [
-                    "Home"
-                ],
-                "summary": "",
-                "description": "Finds the average transactions per second over the last 128 blocks, difficulty, nrg consumed per block, and nrg limit per block, target and current block time, network hash rate, peak transactions and total transactions in the last 24 hours, and last block reward",
-                "operationId": "viewDashboard",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/search": {
-            "get": {
-                "tags": [
-                    "Home"
-                ],
-                "summary": "",
-                "description": "Finds a block by its hash or number, a transaction by its hash, an account by its address, or a token (or list tokens) by its (their) name or symbol",
-                "operationId": "search",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "seachParam",
-                        "in": "query",
-                        "description": "Accepts only one valid block hash or number, transaction hash, account address, token name, or token symbol",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/aion/dashboard/newBlockReceived": {
-            "post": {
-                "tags": [
-                    "Home"
-                ],
-                "summary": "",
-                "description": "Finds the latest block mined on the blockchain",
-                "operationId": "receivedNewBlockDashboard",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "201": {
-                        "description": "Created"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        }
+  "swagger": "2.0",
+  "info": {
+    "description": "Public API Documentation",
+    "version": "1.0",
+    "title": "AION Dashboard",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
+  },
+  "host": "localhost:8080",
+  "basePath": "/aion",
+  "tags": [
+    {
+      "name": "Home",
+      "description": "All methods on the Home Page"
+    },
+    {
+      "name": "Block",
+      "description": "All Block-related API methods"
+    },
+    {
+      "name": "Token",
+      "description": "All Token-related API methods"
+    },
+    {
+      "name": "Account",
+      "description": "All Account-related API methods"
+    },
+    {
+      "name": "Contract",
+      "description": "All Contract-related API methods"
+    },
+    {
+      "name": "Transaction",
+      "description": "All Transaction-related API methods"
+    },
+    {
+      "name": "Third-Party",
+      "description": "All Third-Party related API methods"
+    },
+    {
+      "name": "Miscellaneous",
+      "description": "All other methods that do not fit into the other categories"
+    }
+  ],
+  "paths": {
+    "/aion/dashboard/getRTMetrics": {
+      "get": {
+        "tags": [
+          "Miscellaneous"
+        ],
+        "summary": "",
+        "description": "Used to gather the key metrics on realtime data to build alerts",
+        "operationId": "getRTMetrics",
+        "produces": [
+          "application/object"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getGraphingInfo": {
+      "get": {
+        "tags": [
+          "Miscellaneous"
+        ],
+        "summary": "",
+        "description": "Used to information for the sake of historical graphs",
+        "operationId": "getGraphingInfo",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "0 = Active Address Growth, 1 = Top Miner, 2 = Difficulty, 3 = Hashing Power, 4 = Transactions over time, 5 = Block Time",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getTokenList": {
+      "get": {
+        "tags": [
+          "Token"
+        ],
+        "summary": "",
+        "description": "Finds a list of all tokens created within the last year",
+        "operationId": "getTokenList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show information token records or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of token records per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampStart",
+            "in": "query",
+            "description": "The start date (as a timestamp in seconds) range to begin gathering created tokens from (defaults to 1 year ago)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampEnd",
+            "in": "query",
+            "description": "The end date (as a timestamp in seconds) range to end gathering created tokens from (defaults to current date)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getTokenListByTokenNameOrTokenSymbol": {
+      "get": {
+        "tags": [
+          "Token"
+        ],
+        "summary": "",
+        "description": "Finds a list of one or more tokens with the same name or symbol",
+        "operationId": "getTokenByTokenNameOrTokenSymbol",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "searchParam",
+            "in": "query",
+            "description": "Accepts only one valid token name or symbol",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show information token records or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of token records per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getTokenDetailsTransfersAndHoldersByContractAddress": {
+      "get": {
+        "tags": [
+          "Token"
+        ],
+        "summary": "",
+        "description": "Finds the detailed information on a token, its transfers, and its holders by the token's address",
+        "operationId": "getTokenAndTransactionAndAccountDetailsByContractAddress",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "searchParam",
+            "in": "query",
+            "description": "Accepts only one valid contract address (to be deprecated)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "contractAddress",
+            "in": "query",
+            "description": "Accepts only one valid contract address (to replace searchParam)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "holdersPage",
+            "in": "query",
+            "description": "The page number to show information for account holders or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "holdersSize",
+            "in": "query",
+            "description": "The amount of token records for account holders per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transfersPage",
+            "in": "query",
+            "description": "The page number to show information for transaction tranfsers from or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transfersSize",
+            "in": "query",
+            "description": "The amount of token records for transaction tranfsers per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getContractList": {
+      "get": {
+        "tags": [
+          "Contract"
+        ],
+        "summary": "",
+        "description": "Finds a list of all contracts created within the last year by default",
+        "operationId": "getContractList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show information or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of contract records per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampStart",
+            "in": "query",
+            "description": "The start date (as a timestamp in seconds) range to begin gathering deployed contracts from (defaults to 1 year ago)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampEnd",
+            "in": "query",
+            "description": "The end date (as a timestamp in seconds) range to end gathering deployed contracts from (defaults to current date)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getContractDetailsByContractAddress": {
+      "get": {
+        "tags": [
+          "Contract"
+        ],
+        "summary": "",
+        "description": "Finds the detailed information of a contract by the contract's address",
+        "operationId": "getContractDetailsByContractAddress",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "searchParam",
+            "in": "query",
+            "description": "Accepts only one valid contract address (to be deprecated)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "contractAddress",
+            "in": "query",
+            "description": "Accepts only one valid contract address (to replace searchParam)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "eventsPage",
+            "in": "query",
+            "description": "The page number to show information contract events or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "eventsSize",
+            "in": "query",
+            "description": "The amount of contract events per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transactionsPage",
+            "in": "query",
+            "description": "The page number to show information contract transactions or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transactionsSize",
+            "in": "query",
+            "description": "The amount of contract transactions per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getBlockList": {
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "",
+        "description": "Finds a list of blocks mined within the last month by default",
+        "operationId": "getBlockList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show block records or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of block records in per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampStart",
+            "in": "query",
+            "description": "The start date (as a timestamp in seconds) range to begin gathering mined blocks from (defaults to 1 month ago)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampEnd",
+            "in": "query",
+            "description": "The end date (as a timestamp in seconds) range to end gathering mined blocks from (defaults to current date)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getBlocksMinedByAddress": {
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "",
+        "description": "Finds a list of the blocks mined by an account in the last month by default",
+        "operationId": "getBlocksMinedByAddress",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "searchParam",
+            "in": "query",
+            "description": "Accepts only one valid address (to be deprecated)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "accountAddress",
+            "in": "query",
+            "description": "Accepts only one valid account address (to replace searchParam)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show mined block records or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of mined block records per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampStart",
+            "in": "query",
+            "description": "The start date (as a timestamp in seconds) range to begin gathering mined blocks from (defaults to 1 month ago)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampEnd",
+            "in": "query",
+            "description": "The end date (as a timestamp in seconds) range to end gathering mined blocks from (defaults to current date)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getBlockAndTransactionDetailsFromBlockNumberOrBlockHash": {
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "",
+        "description": "Finds the block and transaction details on a specific block by its number or hash",
+        "operationId": "getBlockAndTransactionDetailsFromBlockNumberOrBlockHash",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "searchParam",
+            "in": "query",
+            "description": "Accepts only one valid block number or hash",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getAccountRichList": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "",
+        "description": "Finds the Top 25 richest accounts on the network",
+        "operationId": "getAccountRichList",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getAccountDetails": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "",
+        "description": "Finds the details of an account by its address",
+        "operationId": "getAccountDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "searchParam",
+            "in": "query",
+            "description": "Accepts only one valid account address (To be deprecated in v3)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "accountAddress",
+            "in": "query",
+            "description": "Accepts only one valid account address",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tokenAddress",
+            "in": "query",
+            "description": "Accepts only one valid token address or null for the Aion token",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getDailyAccountStatistics": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "",
+        "description": "Finds the general statistics of accounts involved in mining, inbound transactions, and outbound transactions within the last 24 hours",
+        "operationId": "getDailyAccountStatistics",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getTransactionList": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "",
+        "description": "Finds a list of the last 1,000 transactions",
+        "operationId": "getTransactionList",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show transaction records from",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of transaction records per page (capped @ 999)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampStart",
+            "in": "query",
+            "description": "The start date (as a timestamp in seconds) range to begin gathering executed transactions from (defaults to 1 month ago)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampEnd",
+            "in": "query",
+            "description": "The end date (as a timestamp in seconds) range to end gathering executed transactions from (defaults to current date)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getTransactionsByAddress": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "",
+        "description": "Finds a list of transactions involving an account in the last month by default",
+        "operationId": "getTransactionsByAddress",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "searchParam",
+            "in": "query",
+            "description": "Accepts only one valid account address (To be deprecated)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "accountAddress",
+            "in": "query",
+            "description": "Accepts only one valid account address (to replace searchParam)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "tokenAddress",
+            "in": "query",
+            "description": "Accepts only one valid token address or null for the Aion token",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show sent/received transaction records from or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of sent/received transaction records per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampStart",
+            "in": "query",
+            "description": "The start date (as a timestamp in seconds) range to begin gathering executed transactions from (defaults to 1 month ago)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampEnd",
+            "in": "query",
+            "description": "The end date (as a timestamp in seconds) range to end gathering executed transactions from (defaults to current date)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getTransactionDetailsByTransactionHash": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "",
+        "description": "Finds a transaction by its hash",
+        "operationId": "getTransactionDetailsByTransactionHash",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "searchParam",
+            "in": "query",
+            "description": "Accepts only one valid transaction hash (to be deprecated)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "transactionHash",
+            "in": "query",
+            "description": "Accepts only one valid transaction hash (to replace searchParam)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show transaction events from",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of transaction events per page (capped @ 999)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getInternalTransfersByAddress": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "",
+        "description": "Finds a list of internal transfers involving an account for the last year by default",
+        "operationId": "getInternalTransfersByAddress",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountAddress",
+            "in": "query",
+            "description": "Accepts only one valid account address (to replace searchParam)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show sent/received transaction records from or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of sent/received transaction records per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampStart",
+            "in": "query",
+            "description": "The start date (as a timestamp in seconds) range to begin gathering executed transactions from (defaults to 1 month ago)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "timestampEnd",
+            "in": "query",
+            "description": "The end date (as a timestamp in seconds) range to end gathering executed transactions from (defaults to current date)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getInternalTransfersByTransactionHash": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "",
+        "description": "Finds a list of internal transfers involving a transaction",
+        "operationId": "getInternalTransfersByTransactionHash",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "transactionHash",
+            "in": "query",
+            "description": "Accepts only one valid transaction hash",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The page number to show sent/received transaction records from or null",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The amount of sent/received transaction records per page or null (capped @ 999)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/view": {
+      "get": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "",
+        "description": "Finds the average transactions per second over the last 128 blocks, difficulty, nrg consumed per block, and nrg limit per block, target and current block time, network hash rate, peak transactions and total transactions in the last 24 hours, and last block reward",
+        "operationId": "viewDashboard",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/search": {
+      "get": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "",
+        "description": "Finds a block by its hash or number, a transaction by its hash, an account by its address, or a token (or list tokens) by its (their) name or symbol",
+        "operationId": "search",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "seachParam",
+            "in": "query",
+            "description": "Accepts only one valid block hash or number, transaction hash, account address, token name, or token symbol",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/newBlockReceived": {
+      "post": {
+        "tags": [
+          "Home"
+        ],
+        "summary": "",
+        "description": "Finds the latest block mined on the blockchain",
+        "operationId": "receivedNewBlockDashboard",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/aion/dashboard/getCirculatingSupply": {
+      "get": {
+        "tags": [
+          "Third-Party"
+        ],
+        "summary": "",
+        "description": "Outputs the circulating supply of AION for the current month",
+        "operationId": "getCirculatingSupply",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  }
 }
