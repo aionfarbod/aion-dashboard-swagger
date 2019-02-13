@@ -10,7 +10,7 @@
     }
   },
   "host": "mastery-api.aion.network",
-  "basePath": "/aion",
+  "basePath": "",
   "tags": [
     {
       "name": "Home",
