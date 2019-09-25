@@ -609,14 +609,14 @@
         }
       }
     },
-    "/aion/dashboard/getAccountRichList": {
+    "/aion/dashboard/getRichList": {
       "get": {
         "tags": [
           "Account"
         ],
         "summary": "",
         "description": "Finds the Top 25 richest accounts on the network",
-        "operationId": "getAccountRichList",
+        "operationId": "getRichList",
         "produces": [
           "application/json"
         ],
